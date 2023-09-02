@@ -6,12 +6,20 @@
 //
 
 import SwiftUI
+import XCTestDynamicOverlay
 
 @main
 struct MomentsOfSpaceApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if !_XCTIsTesting {
+                NavigationStack {
+                    MeditationListView(store: .init(initialState: .init()) {
+                        MeditationListFeature()._printChanges()
+                    })
+                }
+            }
+
         }
     }
 }
